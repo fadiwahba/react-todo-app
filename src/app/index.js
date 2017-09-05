@@ -1,8 +1,30 @@
 const React = require('react');
 const ReactDom = require('react-dom');
+// import { Router, browserHistory } from 'react-router';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+
+// other module requires
 const TodoItem = require('./todoItem');
 const AddTodoItem = require('./addTodoItem');
+const NavComponent = require('./navComponent');
+const AboutComponent = require('./aboutComponent');
+
+// CSS require
 require('./css/index.css');
+
+// Setup routes
+var App = React.createClass({
+  render: function () {
+    return (
+      <Router>
+        <Switch>
+          <Route exact={true} path={'/'} component={TodoComponent} />
+          <Route path={'/about'} component={AboutComponent} />
+        </Switch>
+      </Router>
+    );
+  }
+});
 
 // create Todocomponent
 var TodoComponent = React.createClass({
@@ -23,6 +45,7 @@ var TodoComponent = React.createClass({
     }.bind(this));
     return (
       <div id="todo-list">
+        <NavComponent />
         <h2>My Todos:</h2>
         <ul>
           {todos}
@@ -51,20 +74,20 @@ var TodoComponent = React.createClass({
   },
 
   // lifecycle functions
-  componentWillMount: function(){
+  componentWillMount: function () {
     console.log('componentWillMount');
   },
-  componentDidMount: function(){
+  componentDidMount: function () {
     console.log('componentDidMount');
   },
-  componentWillUpdate: function(){
+  componentWillUpdate: function () {
     console.log('componentWillUpdate');
   },
-  componentDidUpdate: function(){
+  componentDidUpdate: function () {
     console.log('componentDidUpdate');
   }
 
 });
 
 // render compoinent in HTML
-ReactDom.render(<TodoComponent />, document.getElementById('todo-wrapper'));
+ReactDom.render(<App />, document.getElementById('todo-wrapper'));
